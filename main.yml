@@ -1,0 +1,127 @@
+---
+# 
+# my-use-case is the only required role.
+# However, in addition to tasks in my-use-case, 
+# additional roles can be included.
+# Such roles can either be provided as part the
+# external repo or included from a curated list
+# of ACE-Box default roles.
+# 
+- debug:
+    msg: "Hello from {{ my_ext_use_case_name }}!"
+
+# API Tenant Token
+
+- include_role:
+    name: dt-access-token
+  vars:
+    access_token_var_name: "ace_box_my_access_token"
+    access_token_scope: ["activeGates.read","activeGates.write","activeGateTokenManagement.create","activeGateTokenManagement.read","activeGateTokenManagement.write","adaptiveTrafficManagement.read","agentTokenManagement.read","analyzers.read","analyzers.write","apiTokens.read","apiTokens.write","attacks.read","attacks.write","auditLogs.read","bizevents.ingest","entities.read","entities.write","events.ingest","events.read","extensionConfigurationActions.write","extensionConfigurations.read","extensionConfigurations.write","extensionEnvironment.read","extensionEnvironment.write","extensions.read","extensions.write","geographicRegions.read","hub.install","hub.read","hub.write","javaScriptMappingFiles.read","javaScriptMappingFiles.write","logs.ingest","logs.read","metrics.ingest","metrics.read","metrics.write","networkZones.read","networkZones.write","oneAgents.read","oneAgents.write","openTelemetryTrace.ingest","problems.read","problems.write","releases.read","rumCookieNames.read","securityProblems.read","securityProblems.write","settings.read","settings.write","slo.read","slo.write","syntheticExecutions.read","syntheticExecutions.write","syntheticLocations.read","syntheticLocations.write","tenantTokenRotation.write","traces.lookup","unifiedAnalysis.read","ActiveGateCertManagement","CaptureRequestData","credentialVault.read","credentialVault.write","DataExport","DataPrivacy","DssFileManagement","DTAQLAccess","ExternalSyntheticIntegration","ReadConfig","ReadSyntheticData","RestRequestForwarding","RumBrowserExtension","RumJavaScriptTagManagement","UserSessionAnonymization","WriteConfig","AdvancedSyntheticIntegration","openpipeline.events","openpipeline.events_sdlc","openpipeline.events_sdlc.custom","openpipeline.events_security","openpipeline.events_security.custom","openpipeline.events.custom","InstallerDownload","SupportAlert"]
+
+#Ensures apps are pre-installed
+
+##Install AWS Connector App
+- include_role:
+    name: dt-platform
+    tasks_from: ensure-app
+  vars:
+    dt_app_id: "{{ item.dt_app_id }}"
+    dt_environment_url_gen3: "{{ extra_vars.dt_environment_url_gen3 }}"
+    dt_oauth_sso_endpoint: "{{ extra_vars.dt_oauth_sso_endpoint }}"
+    dt_oauth_client_id: "{{ extra_vars.dt_oauth_client_id }}"
+    dt_oauth_client_secret: "{{ extra_vars.dt_oauth_client_secret }}"
+    dt_oauth_account_urn: "{{ extra_vars.dt_oauth_account_urn }}"
+  loop:
+    - dt_app_id: "dynatrace.aws.connector"
+      dt_app_version: "1.1.1"
+
+##Install ProblemsGen3 App
+- include_role:
+    name: dt-platform
+    tasks_from: ensure-app
+  vars:
+    dt_app_id: "{{ item.dt_app_id }}"
+    dt_environment_url_gen3: "{{ extra_vars.dt_environment_url_gen3 }}"
+    dt_oauth_sso_endpoint: "{{ extra_vars.dt_oauth_sso_endpoint }}"
+    dt_oauth_client_id: "{{ extra_vars.dt_oauth_client_id }}"
+    dt_oauth_client_secret: "{{ extra_vars.dt_oauth_client_secret }}"
+    dt_oauth_account_urn: "{{ extra_vars.dt_oauth_account_urn }}"
+  loop:
+    - dt_app_id: "dynatrace.davis.problems"
+      dt_app_version: "1.6.0"
+
+##Install Davis Anomaly Detector
+- include_role:
+    name: dt-platform
+    tasks_from: ensure-app
+  vars:
+    dt_app_id: "{{ item.dt_app_id }}"
+    dt_environment_url_gen3: "{{ extra_vars.dt_environment_url_gen3 }}"
+    dt_oauth_sso_endpoint: "{{ extra_vars.dt_oauth_sso_endpoint }}"
+    dt_oauth_client_id: "{{ extra_vars.dt_oauth_client_id }}"
+    dt_oauth_client_secret: "{{ extra_vars.dt_oauth_client_secret }}"
+    dt_oauth_account_urn: "{{ extra_vars.dt_oauth_account_urn }}"
+  loop:
+    - dt_app_id: "dynatrace.davis.anomalydetection"
+      dt_app_version: "1.6.1"
+
+##Install SRG
+- include_role:
+    name: dt-platform
+    tasks_from: ensure-app
+  vars:
+    dt_app_id: "{{ item.dt_app_id }}"
+    dt_environment_url_gen3: "{{ extra_vars.dt_environment_url_gen3 }}"
+    dt_oauth_sso_endpoint: "{{ extra_vars.dt_oauth_sso_endpoint }}"
+    dt_oauth_client_id: "{{ extra_vars.dt_oauth_client_id }}"
+    dt_oauth_client_secret: "{{ extra_vars.dt_oauth_client_secret }}"
+    dt_oauth_account_urn: "{{ extra_vars.dt_oauth_account_urn }}"
+  loop:
+    - dt_app_id: "dynatrace.site.reliability.guardian"
+      dt_app_version: "1.15.0"
+
+##Install SLOs
+- include_role:
+    name: dt-platform
+    tasks_from: ensure-app
+  vars:
+    dt_app_id: "{{ item.dt_app_id }}"
+    dt_environment_url_gen3: "{{ extra_vars.dt_environment_url_gen3 }}"
+    dt_oauth_sso_endpoint: "{{ extra_vars.dt_oauth_sso_endpoint }}"
+    dt_oauth_client_id: "{{ extra_vars.dt_oauth_client_id }}"
+    dt_oauth_client_secret: "{{ extra_vars.dt_oauth_client_secret }}"
+    dt_oauth_account_urn: "{{ extra_vars.dt_oauth_account_urn }}"
+  loop:
+    - dt_app_id: "dynatrace.service.level.objectives"
+      dt_app_version: "1.0.2"
+
+# microk8s, dt-oneagent and jenkins are curated roles provided by 
+# the ACE-Box.
+# Curated roles can be sourced from within your use case.
+# 
+#- include_role:
+#    name: "microk8s"
+
+#- include_role:
+#    name: "dt-oneagent"
+
+
+
+# Include and template use case specific values before installing Dashboard
+#- set_fact:
+#    include_dashboard_value_file: "{{ role_path }}/templates/my-use-case-dashboard.yml.j2"
+
+#- include_role:
+#    name: dashboard
+#    tasks_from: template-values-file
+
+#- include_role:
+#    name: dashboard
+
+# 
+# All other roles provided in an external use case are 
+# synched with the ACE-Box Ansible directory and can
+# therefore be sourced just like curated roles.
+# 
+#- include_role:
+#    name: "another-role"
