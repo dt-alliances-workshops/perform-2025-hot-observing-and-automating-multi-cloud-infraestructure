@@ -35,18 +35,18 @@
 
 - name: Template dashboard
   ansible.builtin.template:
-    src: "/home/dt_training/repos/observing-automating-multicloud-infra/roles/my-use-case/templates/api-token-dashboard.json.j2"
-    dest: "/home/dt_training/repos/observing-automating-multicloud-infra/roles/my-use-case/files/api-token-dashboard.json"
+    src: "/home/dt_training/repos/perform-2025-hot-observing-and-automating-multi-cloud-infraestructure/roles/my-use-case/templates/api-token-dashboard.json.j2"
+    dest: "/home/dt_training/repos/perform-2025-hot-observing-and-automating-multi-cloud-infraestructure/roles/my-use-case/files/api-token-dashboard.json"
     owner: "{{ ace_box_user }}"
     group: "{{ ace_box_user }}"
     mode: "0644"
 
 #PUSH Dashboardd with API Token
 - include_tasks:
-    file: /home/dt_training/repos/observing-automating-multicloud-infra/roles/my-use-case/tasks/add-dashboard-gen3.yml
+    file: /home/dt_training/repos/perform-2025-hot-observing-and-automating-multi-cloud-infraestructure/roles/my-use-case/tasks/add-dashboard-gen3.yml
   vars:
     dashboard_name: "api-token-dashboard"
-    path_to_dashboard: "/home/dt_training/repos/observing-automating-multicloud-infra/roles/my-use-case/files/api-token-dashboard.json"
+    path_to_dashboard: "/home/dt_training/repos/perform-2025-hot-observing-and-automating-multi-cloud-infraestructure/roles/my-use-case/files/api-token-dashboard.json"
     
          
 
