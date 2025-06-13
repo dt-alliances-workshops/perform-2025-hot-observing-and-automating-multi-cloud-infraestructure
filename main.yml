@@ -10,6 +10,10 @@
 - debug:
     msg: "Hello from {{ my_ext_use_case_name }}!"
 
+- name: Modify environment URL and register new variable
+  set_fact:
+    dt_environment_url: "{{ extra_vars.dt_environment_url_gen3 | regex_replace('apps', 'live') }}"
+
 # API Tenant Token
 
 - include_role:
