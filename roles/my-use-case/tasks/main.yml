@@ -16,7 +16,11 @@
   vars:
     access_token_var_name: "ace_box_my_access_token"
     access_token_scope: ["activeGates.read","activeGates.write","activeGateTokenManagement.create","activeGateTokenManagement.read","activeGateTokenManagement.write","adaptiveTrafficManagement.read","agentTokenManagement.read","analyzers.read","analyzers.write","apiTokens.read","apiTokens.write","attacks.read","attacks.write","auditLogs.read","bizevents.ingest","entities.read","entities.write","events.ingest","events.read","extensionConfigurationActions.write","extensionConfigurations.read","extensionConfigurations.write","extensionEnvironment.read","extensionEnvironment.write","extensions.read","extensions.write","geographicRegions.read","hub.install","hub.read","hub.write","javaScriptMappingFiles.read","javaScriptMappingFiles.write","logs.ingest","logs.read","metrics.ingest","metrics.read","metrics.write","networkZones.read","networkZones.write","oneAgents.read","oneAgents.write","openTelemetryTrace.ingest","problems.read","problems.write","releases.read","rumCookieNames.read","securityProblems.read","securityProblems.write","settings.read","settings.write","slo.read","slo.write","syntheticExecutions.read","syntheticExecutions.write","syntheticLocations.read","syntheticLocations.write","tenantTokenRotation.write","traces.lookup","unifiedAnalysis.read","ActiveGateCertManagement","CaptureRequestData","credentialVault.read","credentialVault.write","DataExport","DataPrivacy","DssFileManagement","DTAQLAccess","ExternalSyntheticIntegration","ReadConfig","ReadSyntheticData","RestRequestForwarding","RumBrowserExtension","RumJavaScriptTagManagement","UserSessionAnonymization","WriteConfig","AdvancedSyntheticIntegration","openpipeline.events","openpipeline.events_sdlc","openpipeline.events_sdlc.custom","openpipeline.events_security","openpipeline.events_security.custom","openpipeline.events.custom","InstallerDownload","SupportAlert"]
-  
+
+- name: Modify environment URL and register new variable
+  set_fact:
+    dt_environment_url: "{{ extra_vars.dt_environment_url_gen3 | regex_replace('apps', 'live') }}"
+      
 - name: Save API Token
   ansible.builtin.shell: |
     bash -c "cat > /tmp/token.txt" <<EOF
